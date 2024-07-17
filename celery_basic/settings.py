@@ -131,6 +131,7 @@ STATIC_URL = "static/"
 
 STATICFILES_DIRS = [
     BASE_DIR / "celery_basic_app/static",
+    BASE_DIR / "image_formats_conversion/static"
 ]
 
 

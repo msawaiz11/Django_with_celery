@@ -1,3 +1,5 @@
 from django.shortcuts import render
+from celery.result import AsyncResult
 
-# Create your views here.
+def index(request):
+    return render(request, "image_formats_conversion/index.html")

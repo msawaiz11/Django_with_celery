@@ -1,6 +1,5 @@
 from django.urls import path, include
-# from . import views
-from celery_basic_app import views
+from image_formats_conversion import views
 
 urlpatterns = [
     path('', views.index, name='index')
