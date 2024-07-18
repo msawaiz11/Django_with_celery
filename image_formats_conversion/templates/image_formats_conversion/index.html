@@ -28,6 +28,34 @@
             downloadButton.disabled = false; // Enable the button
 
         }
+
+        else if(data.png_to_docx){
+
+          const downloadButton = document.getElementById('download-btn_for_png_word');
+            downloadButton.href = data.png_to_docx; // Set the href to the PDF link
+            downloadButton.download = `converted_${data.task_id}.docx`; // Set the filename
+        //     // downloadButton.textContent = 'Download PDF';
+            downloadButton.disabled = false; // Enable the button
+
+
+        }
+
+        else if(data.imgtopdf){
+          const downloadButton = document.getElementById('download-btn_for_pdf');
+          downloadButton.href = data.imgtopdf; // Set the href to the PDF link
+          downloadButton.download = `converted_${data.task_id}.pdf`; // Set the filename
+      //     // downloadButton.textContent = 'Download PDF';
+          downloadButton.disabled = false; // Enable the button
+        }
+        
+        else if(data.heictoimg){
+          const downloadButton = document.getElementById('download-btn_for_heic_png');
+          downloadButton.href = data.heictoimg; // Set the href to the PDF link
+          downloadButton.download = `converted_${data.task_id}.png`; // Set the filename
+      //     // downloadButton.textContent = 'Download PDF';
+          downloadButton.disabled = false; // Enable the button
+        }
+
       }
 
 
@@ -45,16 +73,66 @@
           reader.readAsDataURL(file);
         }
     }
-    </script>
+
+    function PngtoWord(){
+      alert('word function called');
+      const fileInput = document.getElementById('pngtoword');
+      const file = fileInput.files[0];
+
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const fileContent = e.target.result;
+            socket.send(JSON.stringify({ 'action': 'pngtoword',fileName: file.name, content: fileContent }));
+            
+          };
+          reader.readAsDataURL(file);
+        }
+
+
+    }
+
+
+    function ImgtoPdf(){
+      const fileInput = document.getElementById('imgtopdf');
+      const file = fileInput.files[0];
+
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const fileContent = e.target.result;
+            socket.send(JSON.stringify({ 'action': 'imgtopdf',fileName: file.name, content: fileContent }));
+            
+          };
+          reader.readAsDataURL(file);
+        }
+  
+    }
+
+    function HeictoPng(){
+      const fileInput = document.getElementById('heictopng');
+      const file = fileInput.files[0];
+
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const fileContent = e.target.result;
+            socket.send(JSON.stringify({ 'action': 'heictopng',fileName: file.name, content: fileContent }));
+          };
+          reader.readAsDataURL(file);
+        }
+    }
+
+</script>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid" style="padding:0rem 3rem;">
     <h1 class="text-center my-4">
         Image Conversion
     </h1>
     
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-4">
         <h3 class="text-center">Jpg to Png Conversion</h3>
         <input type="file" name="jpgtoppng" class="form-control" id="jpgtoppng">
         <div id="download-container">
@@ -62,6 +140,39 @@
           <a id="download-btn_for_image" disabled class="btn btn-success mt-4 ms-3" href="#">Download Converted Image</a>
         </div>
     
+      </div>
+      <div class="col-md-4">
+        <h3 class="text-center">Image to Pdf Conversion</h3>
+        <input type="file" name="imgtopdf" class="form-control" id="imgtopdf">
+        <div id="download-container">
+         <a href="#" class="btn btn-warning mt-4 text-white" onclick="ImgtoPdf()">Conversion Image to Pdf</a>
+          <a id="download-btn_for_pdf" disabled class="btn btn-success mt-4 ms-3" href="#">Download Converted Pdf</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+       
+        <h3 class="text-center">Png to Word Conversion</h3>
+        <input type="file" name="pngtopsd" class="form-control" id="pngtoword">
+        <div id="download-container">
+         <a href="#" class="btn btn-warning mt-4 text-white" onclick="PngtoWord()">Conversion Png to Word</a>
+          <a id="download-btn_for_png_word" disabled class="btn btn-danger text-white mt-4 ms-3" href="#">Download Converted Word </a>
+        </div>
+
+
+      </div>
+
+      <div class="my-5"></div>
+      <div class="col-md-4">
+       
+        <h3 class="text-center">Heic to Png Conversion</h3>
+        <input type="file" name="heictopng" class="form-control" id="heictopng">
+        <div id="download-container">
+         <a href="#" class="btn btn-warning mt-4 text-white" onclick="HeictoPng()">Conversion Heic to png</a>
+          <a id="download-btn_for_heic_png" disabled class="btn btn-danger text-white mt-4 ms-3" href="#">Download Converted Png</a>
+        </div>
+
+
       </div>
     </div>
  
